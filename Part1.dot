@@ -1,0 +1,210 @@
+digraph DG 
+{
+splines="TRUE"
+orientation="[IL]*"
+rankdir="BT"
+node[shape="box"]
+//======= width height zoom centerx centery
+// viewport="2880, 1800,  1.0, 0.0,    0.0"
+
+//================================ Numbers
+subgraph cluster_Numbers 
+{
+  numbers_natural[label="Natural numbers"]
+  numbers_integer[label="Integers"]
+  numbers_fractions[label="Fractions"]
+  numbers_rational[label="Rational numbers"]
+  numbers_irrational[label="Irrational numbers"]
+  numbers_real[label="Real numbers"]
+  numbers_imaginary[label="Imaginary numbers"]
+  numbers_complex[label="Complex numbers"]
+  numbers_hypercomplex[label="Hyper complex numbers"]
+  numbers_quaternions[label="Quaternions, Octonions, \nSedenions, etc."]
+  numbers_pi[label="Archimedes' constant \n\"pi\""]
+  numbers[label="Numbers"]
+
+
+  numbers_natural->numbers_integer
+  {rank=same numbers_natural numbers_integer numbers_fractions numbers_pi}
+  numbers_integer->numbers_fractions
+  numbers_fractions->numbers_rational
+  numbers_rational->numbers_real->numbers
+  numbers_irrational->numbers_real
+  numbers_irrational->Surd
+
+  numbers_pi->numbers_irrational
+
+  {rank=same numbers_imaginary numbers_real}
+
+  numbers_imaginary->numbers_complex
+  numbers_real->numbers_complex->numbers
+
+  numbers_hypercomplex->numbers
+  numbers_quaternions->numbers
+}
+
+//================================ Arithmetic
+Addition->Arithmetic
+Subtraction->Arithmetic
+Multiplication->Arithmetic
+Division->Arithmetic
+Exponents->Arithmetic
+Logarithms->Arithmetic
+
+{rank=same Addition Subtraction Multiplication Division Exponents Logarithms}
+Addition->Subtraction->Multiplication->Division->Exponents->Logarithms
+
+numbers->Arithmetic
+
+order_of_ops[label="Order of Operations\nPEMDAS"]
+
+Arithmetic->order_of_ops
+
+//================================ Sequences
+Arithmetic_sequence[label="Arithmetic Sequences"]
+Geometric_sequence[label="Geometric Sequences"]
+
+Arithmetic->Arithmetic_sequence->Calculus
+Arithmetic->Geometric_sequence->Calculus
+Arithmetic->Variables
+
+Variables->elementary_algebra
+Variables->functions
+functions->Polynomials
+
+//================================ Algebra
+elementary_algebra[label="Elementary Algebra"]
+graphs[label="Graph Plots"]
+
+functions[label="Functions and \nRelations"]
+
+solving_variables[label="Solving Variables\n\"solve for x\""]
+
+root_finding[label="Root Finding\n\"Linear, Quadratic, \nCubic, etc.\""]
+
+elementary_algebra->graphs
+elementary_algebra->solving_variables
+elementary_algebra->Factorization
+elementary_algebra->root_finding
+elementary_algebra->Inequalities
+
+functions->graphs
+functions->"Continuous Functions"->Differentiability
+functions->"Discontinuous Functions"
+
+Variables->Limits
+
+//================================ Calculus
+polynomial_derivatives[label="Polynomial Derivatives"]
+
+Calculus->Limits
+
+l_hopital_rule[label="L'Hôpital's Rule"]
+
+Limits->l_hopital_rule
+
+{rank=same Limits Inequalities}
+
+//================================ Differential Calculus
+differential_calculus[label="Differential Calculus"]
+
+Limits->differential_calculus
+differential_calculus->polynomial_derivatives
+differential_calculus->trig_derivatives
+differential_calculus->"Product Rule"->"Quotient Rule"
+differential_calculus->"Partial Derivatives"
+differential_calculus->Differentiability
+differential_calculus->"Maxima and Minima"
+differential_calculus->"Chain Rule\nImplicit Differentiation"
+differential_calculus->"Taylor Series"
+
+//================================ Integral Calculus
+integral_calculus[label="Integral Calculus"]
+
+Limits->integral_calculus
+integral_calculus->"Integration by Parts"
+"Product Rule"->"Integration by Parts"
+integral_calculus->"Definite Integrals"
+integral_calculus->"In-definite Integrals"
+"Definite Integrals"->"Integrals of \nPolynomials"
+"Definite Integrals"->"Integrals of \nExponentials"
+"Definite Integrals"->"Integrals of \nLogarithms"
+"Definite Integrals"->"Integrals of \nTrigonometrical Functions"
+
+//================================ Trigonometry
+pythogoras[label="Pythagoras's theorem"]
+sinus_functions[label="Trigonometric Functions\nsine-,cosine-,\ntangent-functions"]
+law_of_sines[label="Law of Sines"]
+trig_identities[label="Trigonometric Identities"]
+
+trig_derivatives[label="Derivatives of\nTrigonometric Functions"]
+
+functions->Trigonometry
+
+{rank=same Trigonometry Calculus}
+
+Trigonometry->pythogoras
+Trigonometry->sinus_functions
+Trigonometry->law_of_sines
+pythogoras->trig_identities
+sinus_functions->trig_identities
+
+sinus_functions->trig_derivatives
+Polynomials->polynomial_derivatives
+
+Derivatives->polynomial_derivatives
+
+Derivatives->trig_derivatives
+
+{rank=same polynomial_derivatives trig_derivatives}
+
+Trigonometry->Degrees
+Trigonometry->Radians
+
+//=============================== Geometry
+Trigonometry->Geometry
+
+plane_geometry[label="Plane geometry"]
+solid_geometry[label="Solid geometry"]
+
+Geometry->plane_geometry
+Geometry->solid_geometry
+
+angles[label="Angles: acute,right,obtuse,\nstraight,reflex"]
+
+angle_properties[label="Angle Properties\nat points or in shapes"]
+
+angles->angle_properties
+
+plane_geometry->angles
+
+quadrilaterals[label="Quadrilaterals\nsquare,rectangle,rhombus,\ntrapezoid\nparallelogram,kite,etc."]
+ext_parametric_curves[label="Extended Parametric Curves\nCircle,Ellipse,Hyperbola,etc."]
+circle_theorems[label="Circle Theorems"]
+
+plane_geometry->Polygons
+Polygons->Triangles
+Polygons->quadrilaterals
+Polygons->ext_parametric_curves
+Polynomials->ext_parametric_curves
+
+ext_parametric_curves->circle_theorems
+
+{rank=same Triangles quadrilaterals}
+
+Triangles->quadrilaterals
+
+//=========================== Solid geometry
+non_polyhedra[label="Parametric Surfaces\nSphere,Cylinder,Torus\nCone,Mobius-strip,etc."]
+solid_geometry->Polyhedra
+solid_geometry->non_polyhedra
+
+platonic_solids[label="Platonic Solids\nTetrahedron,Cube,Octahedron\n,Dodecahedron,Isocahedron"]
+
+Polyhedra->Cuboids
+Polyhedra->platonic_solids
+Polyhedra->Prisms
+Polyhedra->Pyramids
+
+
+}
