@@ -3,13 +3,17 @@ digraph DG
 splines="TRUE"
 orientation="[IL]*"
 rankdir="BT"
-node[shape="box"]
+node[shape="box" fontcolor=white color=white]
+edge[color=white]
+bgcolor=black
+
 //======= width height zoom centerx centery
 // viewport="2880, 1800,  1.0, 0.0,    0.0"
 
 //================================ Numbers
 subgraph cluster_Numbers 
 {
+  color=white
   numbers_natural[label="Natural numbers"]
   numbers_integer[label="Integers"]
   numbers_fractions[label="Fractions"]
@@ -106,6 +110,10 @@ Limits->l_hopital_rule
 {rank=same Limits Inequalities}
 
 //================================ Differential Calculus
+"Discontinuous Functions"->Derivatives
+"Continuous Functions"->Derivatives
+
+differential_calculus->Derivatives
 differential_calculus[label="Differential Calculus"]
 
 Limits->differential_calculus
@@ -118,6 +126,11 @@ differential_calculus->"Maxima and Minima"
 differential_calculus->"Chain Rule\nImplicit Differentiation"
 differential_calculus->"Taylor Series"
 
+Differentiability->"Differential Equations"
+"Partial Derivatives"->"Differential Equations"
+trig_derivatives->"Differential Equations"
+polynomial_derivatives->"Differential Equations"
+
 //================================ Integral Calculus
 integral_calculus[label="Integral Calculus"]
 
@@ -125,7 +138,7 @@ Limits->integral_calculus
 integral_calculus->"Integration by Parts"
 "Product Rule"->"Integration by Parts"
 integral_calculus->"Definite Integrals"
-integral_calculus->"In-definite Integrals"
+integral_calculus->"Indefinite Integrals"
 "Definite Integrals"->"Integrals of \nPolynomials"
 "Definite Integrals"->"Integrals of \nExponentials"
 "Definite Integrals"->"Integrals of \nLogarithms"
