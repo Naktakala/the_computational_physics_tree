@@ -5,7 +5,8 @@ orientation="[IL]*"
 rankdir="BT"
 node[shape="box" fontcolor=white color=white]
 edge[color=white]
-bgcolor=black
+bgcolor="#383737"
+newrank=true
 
 //======= width height zoom centerx centery
 // viewport="2880, 1800,  1.0, 0.0,    0.0"
@@ -92,6 +93,8 @@ elementary_algebra->Factorization
 elementary_algebra->root_finding
 elementary_algebra->Inequalities
 
+solving_variables->solving_linear_systems
+
 functions->graphs
 functions->"Continuous Functions"->Differentiability
 functions->"Discontinuous Functions"
@@ -130,6 +133,7 @@ Differentiability->"Differential Equations"
 "Partial Derivatives"->"Differential Equations"
 trig_derivatives->"Differential Equations"
 polynomial_derivatives->"Differential Equations"
+
 
 //================================ Integral Calculus
 integral_calculus[label="Integral Calculus"]
@@ -212,12 +216,168 @@ non_polyhedra[label="Parametric Surfaces\nSphere,Cylinder,Torus\nCone,Mobius-str
 solid_geometry->Polyhedra
 solid_geometry->non_polyhedra
 
-platonic_solids[label="Platonic Solids\nTetrahedron,Cube,Octahedron\n,Dodecahedron,Isocahedron"]
+platonic_solids[label="Platonic Solids\nTetrahedron,Cube,Octahedron,\nDodecahedron,Isocahedron"]
 
 Polyhedra->Cuboids
 Polyhedra->platonic_solids
 Polyhedra->Prisms
 Polyhedra->Pyramids
+
+//=========================== Linear Algebra
+solving_linear_systems[label="Solving Linear Systems"]
+linear_algebra[label="Linear Algebra"]
+
+solving_linear_systems->linear_algebra
+
+linear_algebra->Vectors
+linear_algebra->Matrices
+
+sparse_matrices[label="Sparse Matrices"]
+dense_matrices[label="Dense Matrices"]
+spd_matrices[label="Symmetric Positive Definite\n Matrices"]
+m_matrices[label="M-matrices"]
+tdm[label="Tri-diagonal Matrices"]
+banded_matrices[label="Banded Matrices"]
+
+Matrices->sparse_matrices->m_matrices
+Matrices->dense_matrices->m_matrices
+
+sparse_matrices->tdm
+sparse_matrices->banded_matrices
+
+m_matrices->spd_matrices
+
+
+
+solving_linear_systems->gauss_elimination
+
+dense_matrices->gauss_elimination
+sparse_matrices->gauss_elimination
+
+
+spd_matrices->cholesky_decomp
+
+tdm->tdma 
+
+banded_matrices->LU_decomposition
+banded_matrices->bmsolvers
+banded_matrices->cholesky_decomp
+
+//=========================== Direct solvers
+subgraph cluster_direct_solvers
+{
+  fontcolor=white
+  color=white
+  label="Direct Methods to \nsolve Linear Systems"
+
+  gauss_elimination[label="Gauss Elimination"]
+  LU_decomposition[label="LU decomposition"]
+  cholesky_decomp[label="Cholesky decomposition"]
+
+  gauss_elimination->LU_decomposition->cholesky_decomp
+
+  tdma[label="Tri-Diagonal Matrix\n Algorithm"]
+  bmsolvers[label="Banded-matrix solver"]
+
+  gauss_elimination->tdma 
+  gauss_elimination->bmsolvers
+  
+}
+
+//=========================== Stationary method solver
+subgraph cluster_stationary_solver
+{
+  fontcolor=white
+  color=white
+  stationary_methods[label="Stationary Iterative Methods\nfor solving Linear Systems"]
+  
+  richardson_iteration[label="Richardson Iteration"]
+  jacobi_iteration[label="Jacobi Iteration"]
+  weighted_jacobi_iteration[label="Weighted Jacobi Iteration"]
+  gausssedidel_iteration[label="Gauss-Seidel Iteration"]
+  sor_iteration[label="Successive Over-Relaxtion method"]
+  ssor_iteration[label="Symmetric Successive Over-Relaxation method"]
+
+  stationary_methods->richardson_iteration
+  stationary_methods->jacobi_iteration
+  stationary_methods->gausssedidel_iteration
+  stationary_methods->sor_iteration
+  
+  jacobi_iteration->weighted_jacobi_iteration
+  sor_iteration->ssor_iteration
+
+  
+}
+{rank=same stationary_methods gauss_elimination}
+
+solving_linear_systems->stationary_methods
+sparse_matrices->stationary_methods
+dense_matrices->stationary_methods
+banded_matrices->stationary_methods
+tdm->stationary_methods
+
+//=========================== Krylov sub-space methods
+subgraph cluster_krylov_methods
+{
+  fontcolor=white
+  color=white
+  krylov_methods[label="Krylov Sub-space Methods"]
+
+  steepest_descent[label="Steepest Descent"]
+  cg[label="Conjugate Gradient"]
+  bicgstab[label="BiCGSTAB"]
+  gmres[label="GMRES"]
+
+  krylov_methods->steepest_descent
+  krylov_methods->cg
+  krylov_methods->bicgstab
+  krylov_methods->gmres
+}
+
+{rank=same stationary_methods krylov_methods}
+
+solving_linear_systems->krylov_methods
+sparse_matrices->krylov_methods
+dense_matrices->krylov_methods
+banded_matrices->krylov_methods
+tdm->krylov_methods
+
+spd_matrices->cg
+
+//=========================== Numerical analysis
+numerical_analysis[label="Numerical Analysis"]
+
+"Differential Equations"->numerical_analysis
+
+numerical_analysis->"Discretization Techniques"
+
+"Discretization Techniques"->"Finite Differencing"
+"Discretization Techniques"->"Finite Volume Method"
+"Discretization Techniques"->finite_element_method
+
+"Discretization Techniques"->solving_linear_systems
+
+{rank=same "Finite Volume Method" "Finite Differencing" finite_element_method}
+
+taylor_expansion[label="Taylor Series Expansion"]
+
+"Taylor Series"->taylor_expansion
+numerical_analysis->taylor_expansion
+
+numerical_analysis->"Polynomial Interpolation"
+
+lagrange_polynomials[label="Lagrange polynomials"]
+
+"Polynomial Interpolation"->lagrange_polynomials
+Polynomials->lagrange_polynomials
+
+solving_non_linear_systems[label="Solving non-linear systems"]
+solving_linear_systems->solving_non_linear_systems
+
+//=========================== Finite element method
+finite_element_method[label="Finite Element Method"]
+
+lagrange_polynomials->finite_element_method
 
 
 }
