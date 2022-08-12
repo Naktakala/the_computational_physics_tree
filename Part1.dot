@@ -79,6 +79,7 @@ functions->Polynomials
 
 //================================ Algebra
 elementary_algebra[label="Elementary Algebra"]
+
 graphs[label="Graph Plots"]
 
 functions[label="Functions and \nRelations"]
@@ -87,17 +88,23 @@ solving_variables[label="Solving Variables\n\"solve for x\""]
 
 root_finding[label="Root Finding\n\"Linear, Quadratic, \nCubic, etc.\""]
 
+{rank=same solving_variables root_finding Factorization graphs}
+
 elementary_algebra->graphs
 elementary_algebra->solving_variables
 elementary_algebra->Factorization
-elementary_algebra->root_finding
+elementary_algebra->Polynomials->root_finding
 elementary_algebra->Inequalities
+
+Polynomials->graphs
 
 solving_variables->solving_linear_systems
 
 functions->graphs
 functions->"Continuous Functions"->Differentiability
 functions->"Discontinuous Functions"
+
+"Continuous Functions"->Polynomials
 
 Variables->Limits
 
@@ -242,10 +249,14 @@ banded_matrices[label="Banded Matrices"]
 Matrices->sparse_matrices->m_matrices
 Matrices->dense_matrices->m_matrices
 
+{rank=same sparse_matrices dense_matrices}
+
 sparse_matrices->tdm
 sparse_matrices->banded_matrices
 
 m_matrices->spd_matrices
+
+{rank=same tdm banded_matrices spd_matrices}
 
 
 

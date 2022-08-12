@@ -1,0 +1,467 @@
+digraph DG 
+{
+splines="TRUE"
+orientation="[IL]*"
+rankdir="BT"
+node[shape="box" fontcolor=white color=white]
+edge[color=white]
+bgcolor="#383737"
+newrank=true
+
+install[label="Installing a Compiler"]
+compiler_options[label="Compiler Options:\nGNU,clang,intel,etc."]
+hello_world[label="The \"Hello World!\" Program"]
+
+install->compiler_options
+compiler_options->hello_world
+
+intro_main_function[label="The basic main function"]
+intro_include[label="The basic #include\nstatement"]
+intro_scope_resolop[label="Scope Resolution\noperator \"::\""]
+
+intro_printing[label="Printing things to\nthe Console"]
+intro_cout[label="std::cout"]
+intro_streaming_operators[label="std::<<"]
+intro_cstyle_printf[label="C-style printf"]
+
+io_lib->{intro_printing}
+
+
+hello_world->intro_main_function
+hello_world->intro_include
+hello_world->intro_scope_resolop
+hello_world->intro_printing
+
+intro_printing->intro_cout
+intro_printing->intro_streaming_operators
+intro_printing->intro_cstyle_printf
+
+cpp[label="c++"]
+
+statements[label="Statements;"]
+
+cpp->statements
+
+comments[label="Comments"]
+single_line_comments[label="Single-line\nComments\n//"]
+multi_line_comments[label="Multi-line\nComments\n/**/"]
+
+statements->comments
+comments->{single_line_comments multi_line_comments}
+
+//===================================== Literals
+Literals 
+
+data_types->Literals
+
+literal_operator[label="Literal\nOperator"]
+Literals->literal_operator->other_operators
+
+integer_literals[label="Integer\nLiterals"]
+float_literals[label="Floating-point\nLiterals"]
+char_literals[label="Character\nLiterals"]
+string_literals[label="String\nLiterals"]
+
+Literals->{integer_literals float_literals char_literals string_literals}
+
+
+//===================================== Standard library
+cpp_standard_library[label="c++ Standard Library"]
+
+{rank=same PEMDAS cpp_standard_library}
+
+cpp->cpp_standard_library
+
+utilities_lib   [label="Utilities\nLibrary"]
+strings_lib     [label="Strings\nLibrary"]
+containers_lib  [label="Containers\nLibrary"]
+iterators_lib   [label="Iterators\nLibrary"]
+algorithms_lib  [label="Algorithms\nLibrary"]
+numerics_lib    [label="Numerics\nLibrary"]
+localization_lib[label="Localization\nLibrary"]
+io_lib          [label="Input/Output\nLibrary"]
+regex_lib       [label="Regular Expression\nLibrary"]
+atomic_library  [label="Atomic Operations\nLibrary"]
+thread_library  [label="Thread Support\nLibrary"]
+
+cpp_standard_library->{
+    utilities_lib   
+    strings_lib     
+    containers_lib  
+    iterators_lib   
+    algorithms_lib  
+    numerics_lib    
+    localization_lib
+    io_lib          
+    regex_lib       
+    atomic_library  
+    thread_library  }
+
+strings_lib->containers_lib->iterators_lib->algorithms_lib
+numerics_lib->localization_lib
+io_lib->regex_lib
+thread_library->atomic_library
+containers_lib->algorithms_lib
+
+memory_management[label="Dynamic memory\nmanagement"]
+numeric_limits[label="Numeric\nlimits"]
+error_handling[label="Error\nHandling"]
+
+utilities_lib->{
+    memory_management
+    numeric_limits
+    error_handling }
+
+exceptions[label="Exceptions"]
+throw
+catch
+
+error_handling->exceptions->{throw catch}
+
+file_io[label="File input/output"]
+
+io_lib->file_io
+
+binary_io[label="Binary-file input/output"]
+
+file_io->binary_io
+
+//===================================== Smart pointers
+shared_ptr[label="std::shared_ptr"]
+unique_ptr[label="std::unique_ptr"]
+weak_ptr[label="std::weak_ptr"]
+
+memory_management->{shared_ptr unique_ptr weak_ptr}
+
+//===================================== Scope
+Scope 
+scope_braces[label="Scope braces {}"]
+
+cpp->Scope 
+Scope->scope_braces
+
+namespaces[label="Namespaces"]
+
+Scope->namespaces
+Scope->intro_scope_resolop
+
+
+//===================================== Functions
+Functions
+main_function[label="Full functionality of\nthe main function"]
+
+cpp->Functions
+
+{rank=same Functions data_types}
+
+Functions->intro_main_function->main_function
+
+math_functions[label="Math\nFunctions"]
+
+Functions->math_functions
+
+function_overloading[label="Function\nOverloading"]
+function_parameters[label="Function\nParameters"]
+default_parameters[label="Default\nParameters"]
+parameter_by_value[label="Parameter\nby-value"]
+parameter_by_reference[label="Parameter\nby-reference"]
+parameter_pointers[label="Pointers as\nParameters"]
+const_parameters[label="const Parameters"]
+return_values[label="Return\nValues"]
+
+{Functions member_methods}->{
+    function_overloading
+    function_parameters
+    return_values }
+
+function_parameters->{default_parameters
+                      parameter_by_value
+                      parameter_by_reference
+                      parameter_pointers
+                      const_parameters}
+
+
+//===================================== Data-types
+data_types[label="Data Types"]
+primitive_data_types[label="Primitive\nData-types:\nbool,char,\nint,float,etc"]
+derived_data_types[label="Derived\nData-types:\nfunction, array,\npointer*, reference&"]
+custom_data_types[label="Custom\nData-types:\nclass, struct,\nunion, enum, typedef"]
+
+primitive_data_types->Literals
+
+{rank=same primitive_data_types derived_data_types custom_data_types}
+
+cpp->data_types
+data_types->primitive_data_types
+data_types->derived_data_types
+data_types->custom_data_types
+
+initialization[label="Initialization"]
+
+primitive_data_types->initialization
+derived_data_types->initialization
+custom_data_types->initialization
+
+type_casting[label="Type casting"]
+
+{rank=same type_casting type_qualifiers}
+
+data_types->type_casting
+
+implicit_conversion[label="Implicit conversion"]
+explicit_conversion[label="Explicit conversion\n(C-style casting)"]
+static_cast
+dynamic_cast
+
+type_casting->{implicit_conversion explicit_conversion static_cast dynamic_cast}
+
+explicit_conversion->"Casting to void*"
+
+dynamic_cast->type_id->RTTI
+
+static_cast->{reinterpret_cast const_cast}
+
+static_pointer_cast[label="std::static_pointer_cast"]
+dynamic_pointer_cast[label="std::dynamic_pointer_cast"]
+const_pointer_cast[label="std::const_pointer_cast"]
+reinterpret_pointer_cast[label="std::reinterpret_pointer_cast"]
+
+type_casting->{
+    static_pointer_cast
+    dynamic_pointer_cast
+    const_pointer_cast
+    reinterpret_pointer_cast
+}
+
+{shared_ptr unique_ptr weak_ptr}->{
+    static_pointer_cast
+    dynamic_pointer_cast
+    const_pointer_cast
+    reinterpret_pointer_cast
+}
+
+storage_class_specifiers[label="Storage class\nspecifiers\nauto,static,\nextern,register\nmutable"]
+
+data_types->storage_class_specifiers
+
+type_aliasing[label="Type Aliasing\ntypedef,using"]
+
+data_types->type_aliasing
+
+type_qualifiers[label="Type\nQualifiers\nconst,unsigned,\nvolatile,restrict,_Atomic"]
+
+data_types->type_qualifiers
+
+{type_aliasing 
+ type_qualifiers 
+ storage_class_specifiers}->{
+    custom_data_types
+    derived_data_types
+    primitive_data_types}
+
+{custom_data_types derived_data_types}->literal_operator
+
+//===================================== Operators
+operators[label="Operators"]
+{primitive_data_types derived_data_types custom_data_types}->operators
+
+statements->operators
+
+arithmetic_operators[label="Arithmetic\nOperators\n+-*/%++--"]
+assignment_operators[label="Assignment\nOperators\n=,+=,*=,etc."]
+relational_operators[label="Relational\nOperators\n==,<=,<,>,etc."]
+logical_operators[label="Logical\nOperators\n&&,||,!,and,or,not"]
+bitwise_operators[label="Bit-wise\nOperators\n&,|,^,~,<<,>>"]
+other_operators[label="Other\nOperators\nsizeof,&,.,->,<<,>>"]
+
+{arithmetic_operators 
+ bitwise_operators}->assignment_operators
+
+ arithmetic_operators->PEMDAS
+
+operators->{arithmetic_operators
+            assignment_operators
+            relational_operators
+            logical_operators
+            bitwise_operators
+            other_operators}
+
+other_operators->ternary_operator
+
+L_value[label="L-value"]
+R_value[label="R-value"]
+
+assignment_operators->{L_value R_value}
+
+//===================================== Classes and structs
+class 
+struct 
+
+custom_data_types->class 
+custom_data_types->struct
+
+class->initialization
+struct->initialization
+
+member_variables[label="Member Variables"]
+member_methods[label="Member Methods"]
+
+initialization->member_variables
+initialization->member_methods
+
+class->member_variables
+struct->member_variables
+class->member_methods
+struct->member_methods
+
+access_specifiers[label="Access Specifiers\npublic,private,protected"]
+
+member_variables->access_specifiers
+member_methods->access_specifiers
+
+const_member_methods[label="const Member\nMethods"]
+
+member_methods->const_member_methods
+
+encapsulation[label="Encapsulation"]
+
+access_specifiers->encapsulation
+
+inheritance[label="Inheritance"]
+{encapsulation class struct}->inheritance
+
+Constructors
+Destructors
+member_method_qualifiers[label="Member Method\nQualifiers\nconst,volatile"]
+
+
+member_methods->{Constructors Destructors operators member_method_qualifiers}
+
+default_constructor[label="Default\nConstructor"]
+copy_constructor[label="Copy\nConstructor"]
+move_constructor[label="Move\nConstructor"]
+
+Constructors->{default_constructor 
+               copy_constructor
+               move_constructor}
+
+copy_assignment_operator[label="Copy-Assignment\nOperator"]
+move_assignment_operator[label="Move-Assignment\nOperator"]
+
+member_methods->{copy_assignment_operator move_assignment_operator}
+
+//===================================== Initialization
+copy_elision[label="Copy Elision"]
+RAII 
+initialization_types[label="Initialization\nTypes"]
+
+initialization->{copy_elision RAII initialization_types}
+
+value_initialization[label="Value\nInitialization"]
+direct_initialization[label="Direct\nInitialization"]
+copy_initialization[label="Copy\nInitialization"]
+list_initialization[label="List\nInitialization"]
+aggregate_initialization[label="Aggregate\nInitialization"]
+reference_initialization[label="Reference\nInitialization"]
+
+initialization_types->
+    value_initialization->
+    direct_initialization->
+    copy_initialization->
+    list_initialization->
+    aggregate_initialization->
+    reference_initialization
+
+
+
+//===================================== OOP
+oop[label="Object Oriented\nProgramming"]
+
+{class struct}->oop
+
+polymorphism[label="Polymorphism"]
+
+{oop inheritance}->polymorphism
+
+function_specifiers[label="Function Specifiers\nvirtual,explicit,etc."]
+
+{member_methods Functions}->function_specifiers
+
+abstract_class_struct[label="Abstract\nclass\nstruct"]
+
+{polymorphism class struct}->abstract_class_struct
+
+virtual_methods[label="Virtual methods"]
+
+{polymorphism function_specifiers}->virtual_methods
+
+oop_hierarchy[label="Hierarchy of Objects"]
+
+{virtual_methods abstract_class_struct}->oop_hierarchy
+
+
+//===================================== Loops
+loops[label="Loops"]
+
+cpp->loops
+
+for_loop[label="for loop"]
+while_loop[label="while loop"]
+
+loops->for_loop
+loops->while_loop
+
+do_while_loop[label="do-while loop"]
+
+while_loop->do_while_loop
+
+traditional_for_loop[label="Traditional\nfor loop"]
+range_for_loop[label="Range-based for loop"]
+
+for_loop->traditional_for_loop
+for_loop->range_for_loop
+
+//===================================== Conditionals
+conditionals[label="Conditional Execution"]
+
+cpp->conditionals
+
+if_else_conditional[label="if-else"]
+switch_conditional[label="switch"]
+ternary_operator[label="Ternary operator\n(Elvis operator)"]
+
+conditionals->if_else_conditional->ternary_operator
+conditionals->switch_conditional
+
+{rank=same if_else_conditional switch_conditional for_loop while_loop}
+
+//===================================== Template metaprogramming
+tmp[label="Template Meta Programming"]
+tmp->{Functions data_types class struct}
+
+function_templates[label="Function\nTemplates"]
+class_struct_templates[label="class/struct\nTemplates"]
+variable_templates[label="Variable\nTemplates"]
+variadic_templates[label="Variadic\nTemplates"]
+
+tmp->{
+    function_templates
+    class_struct_templates
+    variable_templates
+    variadic_templates
+}
+
+template_specialization[label="Template\nSpecialization"]
+template_aliases[label="Template\nAliases"]
+
+{function_templates class_struct_templates}->{
+    template_specialization
+    template_aliases
+}
+
+type_traits[label="Type Traits"]
+
+{variable_templates variadic_templates}->type_traits
+
+
+}
