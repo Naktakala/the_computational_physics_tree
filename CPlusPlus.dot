@@ -49,6 +49,16 @@ multi_line_comments[label="Multi-line\nComments\n/**/"]
 statements->comments
 comments->{single_line_comments multi_line_comments}
 
+labeled_statements[label="Labeled Statements"]
+jump_statements[label="Jump Statements"]
+compound_statements[label="Compound Statements"]
+
+statements->{labeled_statements jump_statements compound_statements}
+
+scope_braces->compound_statements
+jump_statements->{switch_conditional if_else_conditional}
+
+
 //===================================== Literals
 Literals 
 
